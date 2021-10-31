@@ -5,8 +5,11 @@ Plug 'itchyny/lightline.vim'
 Plug 'ap/vim-buftabline'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
+Plug 'fatih/vim-go'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-fugitive'
+Plug 'bronson/vim-trailing-whitespace'
 call plug#end()
-
 
 "========== settings ==========
 set nocompatible
@@ -78,7 +81,6 @@ augroup filetypedetect
   autocmd FileType make setlocal noexpandtab shiftwidth=8 softtabstop=0
 augroup END
 
-
 "========== mappings ==========
 let mapleader=","
 
@@ -92,12 +94,12 @@ noremap <Right> <Nop>
 map bt :bnext<CR>
 map bT :bprevious<CR>
 
+" Format json
+map =j :%!jq<CR>
 
 "========== plugins ==========
 " lightline
-let g:lightline = {
-    \ 'colorscheme': 'onehalfdark',
-    \ }
+let g:lightline = { 'colorscheme': 'onehalfdark' }
 
 " fzf
 let g:fzf_command_prefix = 'Fzf'
@@ -105,3 +107,38 @@ let g:fzf_layout = { 'down': '~20%' }
 let g:fzf_preview_window = ''
 
 nmap <C-p> :FzfFiles<cr>
+
+" netrw
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+let g:netrw_altv = 1
+let g:netrw_winsize = 25
+
+map <leader>n :Explore<CR>
+
+" vim-go
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_types = 1
+let g:go_addtags_transform = "snakecase"
+let g:go_fmt_command = "goimports"
+let g:go_def_mode='gopls'
+let g:go_info_mode='gopls'
+
+nmap <C-g> :GoDecls<cr>
+imap <C-g> <esc>:<C-u>GoDecls<cr>
+
+augroup go
+  autocmd!
+
+  autocmd FileType go nmap <silent> <Leader>v <Plug>(go-def-vertical)
+  autocmd FileType go nmap <silent> <Leader>s <Plug>(go-def-split)
+  autocmd FileType go nmap <silent> <Leader>x <Plug>(go-doc-vertical)
+  autocmd FileType go nmap <silent> <leader>t <Plug>(go-test)
+  autocmd FileType go nmap <silent> <Leader>c <Plug>(go-coverage-toggle)
+augroup END
