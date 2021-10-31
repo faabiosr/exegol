@@ -1,0 +1,29 @@
+[core]
+    editor = nvim
+    excludesfile = ~/.gitignore_global
+
+[color]
+    ui = true
+
+[alias]
+    br = branch
+    ci = commit
+    co = checkout
+    cp = cherry-pick
+    df = diff
+    lg = log -p
+    ps = push
+    st = status
+    undo = reset HEAD
+
+[commit]
+    verbose = true
+
+[url "git@github.com:"]
+    insteadOf = https://github.com/
+
+[commit]
+	gpgsign = true
+
+[include]
+    path = ~/.gitconfig.local
