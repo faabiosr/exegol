@@ -9,6 +9,7 @@ Plug 'fatih/vim-go'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 Plug 'bronson/vim-trailing-whitespace'
+Plug 'neovim/nvim-lspconfig'
 call plug#end()
 
 "========== settings ==========
@@ -142,3 +143,8 @@ augroup go
   autocmd FileType go nmap <silent> <leader>t <Plug>(go-test)
   autocmd FileType go nmap <silent> <Leader>c <Plug>(go-coverage-toggle)
 augroup END
+
+" lspconfig
+lua << EOF
+require('lspconfig').gopls.setup{}
+EOF
