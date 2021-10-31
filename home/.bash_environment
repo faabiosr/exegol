@@ -21,11 +21,13 @@ shopt -s no_empty_cmd_completion
 export LC_ALL=en_US.UTF-8
 
 # VIM everywhere
-set -o vi
 export EDITOR="vim"
 
 # Grep highlight color
 export GREP_COLOR='1;33'
+
+# XTerm colors
+[[ "${TERM}" == "xterm" ]] && export TERM="xterm-256color"
 
 # Colored man pages
 export LESS_TERMCAP_mb=$'\E[01;34m'
