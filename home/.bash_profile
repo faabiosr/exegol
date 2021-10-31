@@ -20,11 +20,14 @@ source "${HOME}/.bash_profile_$(uname -s | tr A-Z a-z)"
 
 # Aliases
 alias l="ls"
-alias ll="ls -laht"
+alias ll="ls -lah"
 alias sl="ls"
 
 alias ..="cd .."
 alias .-="cd -"
+
+alias vi='nvim'
+alias vim='nvim'
 
 # Search for a binary path inside home
 [ -d "${HOME}/bin" ] && export PATH="${HOME}/bin:$PATH"
