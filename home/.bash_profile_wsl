@@ -2,6 +2,7 @@
 #
 # Author: Fabio Ribeiro <faabiosr@gmail.com>
 # Part of https://github.com/faabiosr/exegol
+# vim: noet ts=4 sw=4 ft=sh:
 
 # Aliases
 alias pbcopy='clip.exe'

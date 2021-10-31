@@ -2,6 +2,7 @@
 #
 # Author: Fabio Ribeiro <faabiosr@gmail.com>
 # Part of https://github.com/faabiosr/exegol
+# vim: noet ts=4 sw=4 ft=sh:
 
 # Non-interactive shell, don't do anything.
 [ -z "${PS1}" ] && return

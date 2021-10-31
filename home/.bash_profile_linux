@@ -2,6 +2,7 @@
 #
 # Author: Fabio Ribeiro <faabiosr@gmail.com>
 # Part of https://github.com/faabiosr/exegol
+# vim: noet ts=4 sw=4 ft=sh:
 
 # Make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"

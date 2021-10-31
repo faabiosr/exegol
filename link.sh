@@ -1,4 +1,7 @@
 #!/usr/bin/env sh
+#
+# Author: Fabio Ribeiro <faabiosr@gmail.com>
+# Part of https://github.com/faabiosr/exegol
 
 folder=$(dirname "${0}")
 
