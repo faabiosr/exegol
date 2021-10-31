@@ -1,0 +1,67 @@
+# ~/.bash_profile_wsl
+#
+# Author: Fabio Ribeiro <faabiosr@gmail.com>
+# Part of https://github.com/faabiosr/exegol
+
+# Aliases
+alias pbcopy='clip.exe'
+alias pbpaste='powershell.exe -c Get-Clipboard -Raw'
+
+export WIN_RAW_HOME="$(cmd.exe /c "<nul set /p=%UserProfile%" 2>/dev/null)"
+export WSL_HOME="$(wslpath ${WIN_RAW_HOME})"
+export WSL_DIR_DOWNLOADS="${HOME}/Downloads"
+export WSL_DIR_DESKTOP="${HOME}/Desktop"
+export WSL_DIR_PROJECTS="${HOME}/Projects"
+export WSL_DIR_DOCUMENTS="${HOME}/Documents"
+
+mkdir -p "${WSL_HOME}/Projects"
+
+# Link windows folders
+[ ! -d "${WSL_DIR_DOWNLOADS}" ] && ln -s "${WSL_HOME}/Downloads" "${WSL_DIR_DOWNLOADS}"
+[ ! -d "${WSL_DIR_DESKTOP}" ] && ln -s "${WSL_HOME}/Desktop" "${WSL_DIR_DESKTOP}"
+[ ! -d "${WSL_DIR_PROJECTS}" ] && ln -s "${WSL_HOME}/Projects" "${WSL_DIR_PROJECTS}"
+[ ! -d "${WSL_DIR_DOCUMENTS}" ] && ln -s "${WSL_HOME}/Documents" "${WSL_DIR_DOCUMENTS}"
+
+wsl_sync_ssh () {
+    WIN_SSH_DIR="${WSL_HOME}/.ssh"
+
+    [ ! -d "${WIN_SSH_DIR}" ] && mkdir -p "${WIN_SSH_DIR}"
+    [ -d "${HOME}/.ssh" ] && cp "${HOME}/.ssh/"* "${WIN_SSH_DIR}/"
+}
+
+wsl_sync_git () {
+    for config in "${HOME}"/.git*
+    do
+        filename="$(basename ${config})"
+        existing_config="${WSL_HOME}/${filename}"
+
+        # Backing up the previous files
+        [ -f "${existing_config}" ] && mv "${existing_config}" "${existing_config}.bkp"
+
+        # Copying the files
+        [ ! -d "${config}" ] &&  cp "${config}" "${WSL_HOME}/${filename}"
+
+    done
+}
+
+# Sync ssh
+[ ! -f "${WSL_HOME}/.ssh" ] && wsl_sync_ssh
+
+# Sync git files
+[ ! -f "${WSL_HOME}/.gitignore_global" ] && wsl_sync_git
+
+# Prefer windows binary of git for performance reason, also this will case
+# confusion as the configuration loaded will be the one from the %UserHome%
+# Additionally verifies if the folder is inside the wsl and uses the internal git.
+git () {
+    if $(pwd -P | grep -q "^\/mnt\/c\/*")
+    then
+        git.exe "$@"
+    else
+        command git "$@"
+    fi
+}
+
+# Load keychain
+/usr/bin/keychain -q --nogui "${HOME}/.ssh/id_ed25519"
+source "${HOME}/.keychain/$(hostname)-sh"

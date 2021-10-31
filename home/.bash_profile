@@ -8,6 +8,12 @@
 
 source "${HOME}/.bash_environment"
 
+# Load bash profile based on OS
+source "${HOME}/.bash_profile_$(uname -s | tr A-Z a-z)"
+
+# Load WSL profile
+[ ! -z "$(uname -a | grep 'microsoft')" ] && source "${HOME}/.bash_profile_wsl"
+
 # Load private bash profile
 [ -r "${HOME}/.bash_private" ] && source "${HOME}/.bash_profile"
 
