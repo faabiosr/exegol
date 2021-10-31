@@ -38,3 +38,6 @@ export GIT_PS1_SHOWDIRTYSTATE=true
 export GIT_PS1_SHOWUNTRACKEDFILES=true
 
 PROMPT_COMMAND='__git_ps1 "\[\e[0;36m\][\w]\[\e[39m\]" " " " \[\e[0;36m\][%s\[\e[0;36m\]]\[\e[39m\]"'
+
+# Search for a binary path inside go path
+[ -d "${GOPATH}/bin" ] && export PATH="${GOPATH}/bin:$PATH"
