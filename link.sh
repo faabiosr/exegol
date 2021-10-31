@@ -3,7 +3,9 @@
 # Author: Fabio Ribeiro <faabiosr@gmail.com>
 # Part of https://github.com/faabiosr/exegol
 
-folder=$(dirname "${0}")
+SCRIPT=$(readlink -f "$0")
+BASE_DIR=$(dirname "${SCRIPT}")
+HOME_DIR=${BASE_DIR}/home
 
 _out () {
     echo '=>' $@
@@ -11,21 +13,20 @@ _out () {
 
 _link () {
     echo "linking files"
-    for f in $(find ${folder}/home -type f -name '*')
+    for f in $(find ${HOME_DIR} -type f -name '*' -printf "%P ")
     do
-        filename="$(basename ${f})"
         _out ${f}
-        ln -sf "${f}" "${HOME}/${filename}"
+        mkdir -p $(dirname ${HOME}/${f})
+        ln -sf "${HOME_DIR}/${f}" "${HOME}/${f}"
     done
 }
 
 _unlink () {
     echo "unlinking files"
-    for f in $(find ${folder}/home -type f -name '*')
+    for f in $(find ${HOME_DIR} -type f -name '*' -printf "%P ")
     do
-        filename="$(basename ${f})"
         _out ${f}
-        unlink "${HOME}/${filename}"
+        unlink "${HOME}/${f}"
     done
 }
 
