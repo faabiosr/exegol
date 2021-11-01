@@ -11,9 +11,11 @@ _out () {
     echo '=>' $@
 }
 
+files=$(find ${HOME_DIR} -type f -name '*' -not -path '*AppData/*' -printf "%P ")
+
 _link () {
     echo "linking files"
-    for f in $(find ${HOME_DIR} -type f -name '*' -printf "%P ")
+    for f in $files
     do
         _out ${f}
         mkdir -p $(dirname ${HOME}/${f})
@@ -23,7 +25,7 @@ _link () {
 
 _unlink () {
     echo "unlinking files"
-    for f in $(find ${HOME_DIR} -type f -name '*' -printf "%P ")
+    for f in $files
     do
         _out ${f}
         unlink "${HOME}/${f}"
