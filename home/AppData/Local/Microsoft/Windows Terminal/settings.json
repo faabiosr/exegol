@@ -30,7 +30,9 @@
   "defaultProfile": "{07b52e3e-de2c-5db4-bd2d-ba144ed6c273}",
   "launchMode": "maximized",
   "profiles": {
-    "defaults": {},
+    "defaults": {
+      "bellStyle": "none"
+    },
     "list": [
       {
         "colorScheme": "One Half Dark",
@@ -56,9 +58,9 @@
         "tabTitle": null
       },
       {
-          "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
-          "name": "Ubuntu",
-          "source": "Windows.Terminal.Wsl"
+        "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
+        "name": "Ubuntu",
+        "source": "Windows.Terminal.Wsl"
       }
     ]
   },
