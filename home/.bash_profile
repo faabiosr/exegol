@@ -29,6 +29,28 @@ alias .-="cd -"
 alias vi='nvim'
 alias vim='nvim'
 
+# Functions
+
+# tmux alias
+tm () {
+	# list tmux sessions
+	if [ -z "${1}" ]; then
+		tmux ls
+		return
+	fi
+
+	# if a sessions exists and attach
+	for s in $(tmux ls -F '#{session_name}' 2> /dev/null); do
+		[ $s != ${1} ] && continue
+
+		tmux attach -t ${1}
+		return
+	done
+
+	# create session
+	tmux new -s ${1}
+}
+
 # Search for a binary path inside home
 [ -d "${HOME}/bin" ] && export PATH="${HOME}/bin:$PATH"
 
@@ -41,3 +63,6 @@ PROMPT_COMMAND='__git_ps1 "\[\e[0;36m\][\w]\[\e[39m\]" " " " \[\e[0;36m\][%s\[\e
 
 # Search for a binary path inside go path
 [ -d "${GOPATH}/bin" ] && export PATH="${GOPATH}/bin:$PATH"
+
+# Search for a binary path inside python local
+[ -d "${HOME}/.local/bin" ] && export PATH="${HOME}/.local/bin:$PATH"
