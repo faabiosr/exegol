@@ -29,6 +29,8 @@ alias .-="cd -"
 alias vi='nvim'
 alias vim='nvim'
 
+alias godoc="godoc -http='127.0.0.1:6060'"
+
 # Functions
 
 # tmux alias
