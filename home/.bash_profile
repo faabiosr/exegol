@@ -51,6 +51,59 @@ tm () {
 	tmux new -s ${1}
 }
 
+# tmuxp alias
+tmp () {
+    # list all tmuxp fronzen sessions.
+    if [ -z "${1}" ]; then
+        for i in $(ls ${HOME}/.tmuxp); do
+            echo ${i} | sed "s/.yaml//g";
+        done
+        return
+    fi
+
+    # check if a frozen sessions.
+    for s in $(tmux ls -F '#{session_name}' 2> /dev/null); do
+        [ $s != ${1} ] && continue
+
+        echo "session was loaded, please use tmux"
+    done
+
+    # load fronzen session
+    tmuxp load ${1}
+}
+
+# extracts the given file
+x () {
+    if [ -f $1 ] ; then
+      case $1 in
+        *.tar.bz2)   tar xjf $1     ;;
+        *.tar.gz)    tar xzf $1     ;;
+        *.bz2)       bunzip2 $1     ;;
+        *.rar)       unrar e $1     ;;
+        *.gz)        gunzip $1      ;;
+        *.tar)       tar xf $1      ;;
+        *.tbz2)      tar xjf $1     ;;
+        *.tgz)       tar xzf $1     ;;
+        *.zip)       unzip $1       ;;
+        *.Z)         uncompress $1  ;;
+        *.7z)        7z x $1        ;;
+        *)     echo "'$1' cannot be extracted via extract()" ;;
+         esac
+     else
+         echo "'$1' is not a valid file"
+     fi
+}
+
+# generates an uuid.
+uuid () {
+    uuidgen | awk '{print tolower($1)}'
+}
+
+# generates an uuid and send to clipboard.
+uuidp () {
+    echo -n $(uuid) | pbcopy
+}
+
 # Search for a binary path inside home
 [ -d "${HOME}/bin" ] && export PATH="${HOME}/bin:$PATH"
 
