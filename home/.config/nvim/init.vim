@@ -10,6 +10,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'neovim/nvim-lspconfig'
+Plug 'Raimondi/delimitMate'
 call plug#end()
 
 "========== settings ==========
@@ -148,3 +149,10 @@ augroup END
 lua << EOF
 require('lspconfig').gopls.setup{}
 EOF
+
+" delimitmate
+let g:delimitMate_expand_cr = 1
+let g:delimitMate_expand_space = 1
+let g:delimitMate_smart_quotes = 1
+let g:delimitMate_expand_inside_quotes = 0
+let g:delimitMate_smart_matchpairs = '^\%(\w\|\$\)'
