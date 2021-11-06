@@ -11,6 +11,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'neovim/nvim-lspconfig'
 Plug 'Raimondi/delimitMate'
+Plug 'elzr/vim-json', {'for' : 'json'}
 call plug#end()
 
 "========== settings ==========
@@ -156,3 +157,6 @@ let g:delimitMate_expand_space = 1
 let g:delimitMate_smart_quotes = 1
 let g:delimitMate_expand_inside_quotes = 0
 let g:delimitMate_smart_matchpairs = '^\%(\w\|\$\)'
+
+" vim-json
+let g:vim_json_syntax_conceal = 0
