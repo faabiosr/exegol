@@ -66,3 +66,11 @@ git () {
 # Load keychain
 /usr/bin/keychain -q --nogui "${HOME}/.ssh/id_ed25519"
 source "${HOME}/.keychain/$(hostname)-sh"
+
+# GPG Socket
+export GPG_AGENT_SOCK="${HOME}/.gnupg/S.gpg-agent"
+if ! ss -a | grep -q "${GPG_AGENT_SOCK}"
+then
+  rm -rf $GPG_AGENT_SOCK
+  setsid nohup socat UNIX-LISTEN:$GPG_AGENT_SOCK,fork EXEC:"$HOME/.ssh/wsl2-ssh-pageant.exe --gpg S.gpg-agent" &>/dev/null &
+fi
