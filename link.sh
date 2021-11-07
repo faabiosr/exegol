@@ -3,6 +3,13 @@
 # Author: Fabio Ribeiro <faabiosr@gmail.com>
 # Part of https://github.com/faabiosr/exegol
 
+# osx gnu apps
+if [ $(uname) == "Darwin" ];
+then
+    alias find="gfind"
+    alias readlink="greadlink"
+fi
+
 SCRIPT=$(readlink -f "$0")
 BASE_DIR=$(dirname "${SCRIPT}")
 HOME_DIR=${BASE_DIR}/home

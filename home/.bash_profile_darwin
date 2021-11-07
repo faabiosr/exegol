@@ -1,0 +1,22 @@
+# ~/.bash_profile_darwin
+#
+# Author: Fabio Ribeiro <faabiosr@gmail.com>
+# Part of https://github.com/faabiosr/exegol
+# vim: noet ts=4 sw=4 ft=sh:
+
+# Aliases
+alias ls="ls -G"
+alias grep='grep --color=auto'
+alias find="gfind"
+alias readlink="greadlink"
+
+if type brew &>/dev/null; then
+  HOMEBREW_PREFIX="$(brew --prefix)"
+  if [[ -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]]; then
+    source "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh"
+  else
+    for COMPLETION in "${HOMEBREW_PREFIX}/etc/bash_completion.d/"*; do
+      [[ -r "$COMPLETION" ]] && source "$COMPLETION"
+    done
+  fi
+fi
