@@ -20,3 +20,5 @@ if type brew &>/dev/null; then
     done
   fi
 fi
+
+export PATH="/usr/local/sbin:$(python3 -c 'import site; print(site.USER_BASE)')/bin:$PATH"
