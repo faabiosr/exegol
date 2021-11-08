@@ -16,7 +16,7 @@ source "${HOME}/.bash_profile_$(uname -s | tr A-Z a-z)"
 [ ! -z "$(uname -a | grep 'microsoft')" ] && source "${HOME}/.bash_profile_wsl"
 
 # Load private bash profile
-[ -r "${HOME}/.bash_private" ] && source "${HOME}/.bash_profile"
+[ -r "${HOME}/.bash_private" ] && source "${HOME}/.bash_private"
 
 # Aliases
 alias l="ls"
