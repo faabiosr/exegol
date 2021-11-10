@@ -14,7 +14,8 @@ param(
 $files = @(
     '.config\nvim\init.vim',
     'AppData\Local\Microsoft\Windows Terminal\settings.json',
-    'AppData\Local\OhMyPosh\exegol.json'
+    'AppData\Local\OhMyPosh\exegol.json',
+    'AppData\Local\PS\profile.ps1'
 )
 
 $script ="$PSScriptRoot"

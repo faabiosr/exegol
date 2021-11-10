@@ -14,17 +14,13 @@ SCRIPT=$(readlink -f "$0")
 BASE_DIR=$(dirname "${SCRIPT}")
 HOME_DIR=${BASE_DIR}/home
 
-_out () {
-    echo '=>' $@
-}
-
 files=$(find ${HOME_DIR} -type f -name '*' -not -path '*AppData/*' -printf "%P ")
 
 _link () {
     echo "linking files"
     for f in $files
     do
-        _out ${f}
+        echo "=> ${f}"
         mkdir -p $(dirname ${HOME}/${f})
         ln -sf "${HOME_DIR}/${f}" "${HOME}/${f}"
     done
@@ -34,7 +30,7 @@ _unlink () {
     echo "unlinking files"
     for f in $files
     do
-        _out ${f}
+        echo "=> ${f}"
         unlink "${HOME}/${f}"
     done
 }
