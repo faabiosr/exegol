@@ -10,6 +10,9 @@ alias grep='grep --color=auto'
 alias find="gfind"
 alias readlink="greadlink"
 
+# Safari
+alias safari="open -a /Applications/Safari.app"
+
 if type brew &>/dev/null; then
   HOMEBREW_PREFIX="$(brew --prefix)"
   if [[ -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]]; then
