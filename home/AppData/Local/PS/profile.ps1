@@ -12,6 +12,8 @@ Set-Alias vim "$(scoop prefix neovim)\bin\nvim.exe"
 
 Set-Alias godoc "godoc -http='127.0.0.1:6060'"
 
+Set-Alias ff "firefox"
+
 # Functions
 
 # Generates an uuid.
