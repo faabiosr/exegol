@@ -1,17 +1,17 @@
 " load vim-plug
 call plug#begin('~/.config/nvim/plugged')
-Plug 'sonph/onehalf', {'rtp': 'vim/'}
-Plug 'itchyny/lightline.vim'
-Plug 'ap/vim-buftabline'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
-Plug 'junegunn/fzf.vim'
-Plug 'fatih/vim-go'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-fugitive'
+Plug 'akinsho/bufferline.nvim'
 Plug 'bronson/vim-trailing-whitespace'
-Plug 'neovim/nvim-lspconfig'
-Plug 'Raimondi/delimitMate'
 Plug 'elzr/vim-json', {'for' : 'json'}
+Plug 'fatih/vim-go'
+Plug 'itchyny/lightline.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'neovim/nvim-lspconfig'
+Plug 'sonph/onehalf', {'rtp': 'vim/'}
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'Raimondi/delimitMate'
 call plug#end()
 
 "========== settings ==========
@@ -37,7 +37,6 @@ set incsearch
 set hlsearch
 set ignorecase
 set smartcase
-set shell=/bin/bash
 set backspace=indent,eol,start
 set autoread
 set autowrite
@@ -59,7 +58,7 @@ set clipboard^=unnamedplus
 set signcolumn=yes
 
 if has('persistent_undo')
-    set undodir=~/.vim/undo
+    set undodir=~/.config/nvim/undo
     set undofile
     set undolevels=1000
     set undoreload=10000
@@ -101,6 +100,14 @@ map bT :bprevious<CR>
 map =j :%!jq<CR>
 
 "========== plugins ==========
+" netrw
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+let g:netrw_altv = 1
+let g:netrw_winsize = 25
+
+map <leader>n :Explore<CR>
+
 " lightline
 let g:lightline = { 'colorscheme': 'onehalfdark' }
 
@@ -110,14 +117,6 @@ let g:fzf_layout = { 'down': '~20%' }
 let g:fzf_preview_window = ''
 
 nmap <C-p> :FzfFiles<cr>
-
-" netrw
-let g:netrw_banner = 0
-let g:netrw_liststyle = 3
-let g:netrw_altv = 1
-let g:netrw_winsize = 25
-
-map <leader>n :Explore<CR>
 
 " vim-go
 let g:go_highlight_build_constraints = 1
@@ -160,3 +159,17 @@ let g:delimitMate_smart_matchpairs = '^\%(\w\|\$\)'
 
 " vim-json
 let g:vim_json_syntax_conceal = 0
+
+" bufferline
+lua << EOF
+require("bufferline").setup{
+  options = {
+    numbers = "none",
+    diagnostics = false,
+    show_buffer_icons = false,
+    show_buffer_close_icons = false,
+    show_close_icon = false,
+    separator_style = "thin",
+  }
+}
+EOF
