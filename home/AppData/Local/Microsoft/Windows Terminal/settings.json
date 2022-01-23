@@ -35,9 +35,10 @@
     },
     "list": [
       {
-        "colorScheme": "One Half Dark",
+        "colorScheme": "PaperColor",
         "font": {
-          "face": "CaskaydiaCove NF"
+          "face": "CaskaydiaCove NF",
+          "weight": "normal"
         },
         "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
         "hidden": false,
@@ -45,10 +46,12 @@
         "source": "Windows.Terminal.PowershellCore"
       },
       {
-        "colorScheme": "One Half Dark",
+        "colorScheme": "PaperColor",
         "commandline": "wsl.exe --cd \"\\\\wsl$\\Ubuntu-20.04\\home\\fabio\"",
+        "experimental.retroTerminalEffect": false,
         "font": {
-          "face": "CaskaydiaCove NF"
+          "face": "CaskaydiaCove NF",
+          "weight": "thin"
         },
         "guid": "{07b52e3e-de2c-5db4-bd2d-ba144ed6c273}",
         "hidden": false,
@@ -152,6 +155,29 @@
       "selectionBackground": "#FFFFFF",
       "white": "#FAFAFA",
       "yellow": "#C18301"
+    },
+    {
+      "background": "#EEEEEE",
+      "black": "#1C1C1C",
+      "blue": "#005FAF",
+      "brightBlack": "#1C1C1C",
+      "brightBlue": "#005FAF",
+      "brightCyan": "#0087AF",
+      "brightGreen": "#008700",
+      "brightPurple": "#D70087",
+      "brightRed": "#AF0000",
+      "brightWhite": "#E4E4E4",
+      "brightYellow": "#D75F00",
+      "cursorColor": "#FFFFFF",
+      "cyan": "#0087AF",
+      "foreground": "#444444",
+      "green": "#008700",
+      "name": "PaperColor",
+      "purple": "#D70087",
+      "red": "#AF0000",
+      "selectionBackground": "#FFFFFF",
+      "white": "#E4E4E4",
+      "yellow": "#D75F00"
     },
     {
       "background": "#002B36",
@@ -268,5 +294,6 @@
       "white": "#C0C0C0",
       "yellow": "#808000"
     }
-  ]
+  ],
+  "theme": "light"
 }
