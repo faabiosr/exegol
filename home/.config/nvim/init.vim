@@ -13,9 +13,9 @@ Plug 'itchyny/lightline.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'neovim/nvim-lspconfig'
-Plug 'sonph/onehalf', {'rtp': 'vim/'}
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
+Plug 'NLKNguyen/papercolor-theme'
 Plug 'Raimondi/delimitMate'
 call plug#end()
 
@@ -75,9 +75,9 @@ set conceallevel=2
 " color
 syntax enable
 set t_Co=256
-set background=dark
+set background=light
 set termguicolors
-colorscheme onehalfdark
+colorscheme PaperColor
 
 " file types
 augroup filetypedetect
@@ -114,7 +114,7 @@ let g:netrw_winsize = 25
 map <leader>n :Explore<CR>
 
 " lightline
-let g:lightline = { 'colorscheme': 'onehalfdark' }
+let g:lightline = { 'colorscheme': 'PaperColor_light' }
 
 " fzf
 let g:fzf_command_prefix = 'Fzf'
