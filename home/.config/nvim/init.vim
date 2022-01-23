@@ -4,6 +4,11 @@ Plug 'akinsho/bufferline.nvim'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'elzr/vim-json', {'for' : 'json'}
 Plug 'fatih/vim-go'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-vsnip'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/vim-vsnip'
 Plug 'itchyny/lightline.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -46,7 +51,7 @@ set splitbelow
 set splitright
 set hidden
 set fileformats=unix,dos,mac
-set completeopt=menu,menuone
+set completeopt=menuone,noselect
 set updatetime=3000
 set pumheight=10
 set shortmess+=c
@@ -128,27 +133,18 @@ let g:go_highlight_operators = 1
 let g:go_highlight_structs = 1
 let g:go_highlight_types = 1
 let g:go_addtags_transform = "snakecase"
-let g:go_fmt_command = "goimports"
-let g:go_def_mode='gopls'
-let g:go_info_mode='gopls'
-
-nmap <C-g> :GoDecls<cr>
-imap <C-g> <esc>:<C-u>GoDecls<cr>
+let g:go_gopls_enabled = 0
+let g:go_echo_go_info = 0
+let g:go_def_mapping_enabled = 0
+let g:go_fmt_autosave = 0
+let g:go_imports_autosave = 0
 
 augroup go
   autocmd!
 
-  autocmd FileType go nmap <silent> <Leader>v <Plug>(go-def-vertical)
-  autocmd FileType go nmap <silent> <Leader>s <Plug>(go-def-split)
-  autocmd FileType go nmap <silent> <Leader>x <Plug>(go-doc-vertical)
   autocmd FileType go nmap <silent> <leader>t <Plug>(go-test)
   autocmd FileType go nmap <silent> <Leader>c <Plug>(go-coverage-toggle)
 augroup END
-
-" lspconfig
-lua << EOF
-require('lspconfig').gopls.setup{}
-EOF
 
 " delimitmate
 let g:delimitMate_expand_cr = 1
@@ -160,8 +156,9 @@ let g:delimitMate_smart_matchpairs = '^\%(\w\|\$\)'
 " vim-json
 let g:vim_json_syntax_conceal = 0
 
-" bufferline
+" lua plugins configurations
 lua << EOF
+-- bufferline
 require("bufferline").setup{
   options = {
     numbers = "none",
@@ -172,4 +169,98 @@ require("bufferline").setup{
     separator_style = "thin",
   }
 }
+
+-- lspconfig
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+local nvim_lsp = require('lspconfig')
+
+local on_attach = function(client, bufnr)
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  -- Mappings
+  local opts = { noremap=true, silent=true }
+
+  buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+  buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+end
+
+nvim_lsp.gopls.setup{
+  cmd = {'gopls'},
+  capabilities = capabilities,
+  settings = {
+    gopls = {
+      experimentalPostfixCompletions = true,
+      analyses = {
+        unusedparams = true,
+        shadow = true,
+      },
+      staticcheck = true,
+    },
+  },
+  on_attach = on_attach,
+}
+
+function goimports(timeout_ms)
+  local context = { only = { "source.organizeImports" } }
+  vim.validate { context = { context, "t", true } }
+
+  local params = vim.lsp.util.make_range_params()
+  params.context = context
+
+  -- See the implementation of the textDocument/codeAction callback
+  -- (lua/vim/lsp/handler.lua) for how to do this properly.
+  local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, timeout_ms)
+  if not result or next(result) == nil then return end
+  local actions = result[1].result
+  if not actions then return end
+  local action = actions[1]
+
+  -- textDocument/codeAction can return either Command[] or CodeAction[]. If it
+  -- is a CodeAction, it can have either an edit, a command or both. Edits
+  -- should be executed first.
+  if action.edit or type(action.command) == "table" then
+    if action.edit then
+      vim.lsp.util.apply_workspace_edit(action.edit)
+    end
+    if type(action.command) == "table" then
+      vim.lsp.buf.execute_command(action.command)
+    end
+  else
+    vim.lsp.buf.execute_command(action)
+  end
+end
+
+local cmp = require 'cmp'
+cmp.setup {
+  snippet = {
+    expand = function(args)
+      vim.fn["vsnip#anonymous"](args.body)
+    end,
+  },
+  mapping = {
+    ["<cr>"] = cmp.mapping.confirm({select = true}),
+    ["<s-tab>"] = cmp.mapping.select_prev_item(),
+    ["<tab>"] = cmp.mapping.select_next_item(),
+  },
+  sources = {
+    { name = 'nvim_lsp' },
+    { name = 'vsnip' },
+    { name = 'buffer' },
+  },
+}
 EOF
+
+autocmd BufWritePre *.go lua goimports(1000)
+autocmd BufWritePre *.go lua vim.lsp.buf.formatting()
