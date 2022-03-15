@@ -30,6 +30,9 @@ if ($undo) {
         }
     }
 
+    # Remove profile link.
+    Remove-Item -Path $profile
+
     return
 }
 
@@ -38,4 +41,9 @@ foreach ($file in $files) {
     Write-Host "=> $file"
     New-Item -ItemType Directory -Path (Split-Path -Path "$HOME\$file") -Force | Out-Null
     New-Item -ItemType SymbolicLink -Path "$HOME\$file" -Target "$homeDir\$file" -Force | Out-Null
+}
+
+# Setup profile
+if (!(Test-Path $profile)) {
+    ". $HOME\AppData\Local\PS\profile.ps1" | Out-File $profile -Force
 }
