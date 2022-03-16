@@ -1,57 +1,46 @@
 {
-    "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
-    "blocks": [
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "blocks": [
+    {
+      "alignment": "left",
+      "segments": [
         {
-            "type": "prompt",
-            "alignment": "left",
-            "segments": [
-                {
-                    "type": "os",
-                    "style": "powerline",
-                    "foreground": "cyan",
-                    "properties": {
-                        "prefix": "[",
-                        "postfix": "",
-                        "wsl": "",
-                        "wsl_separator": ""
-                    }
-                },
-                {
-                    "type": "path",
-                    "style": "plain",
-                    "foreground": "cyan",
-                    "properties": {
-                        "style": "full",
-                        "postfix": "]"
-                    }
-                },
-                {
-                    "type": "git",
-                    "style": "plain",
-                    "foreground": "lightGreen",
-                    "properties": {
-                        "prefix": " <lightBlue>[</>",
-                        "postfix": "<lightBlue>]</>"
-                    }
-                }
-            ]
+          "foreground": "cyan",
+          "properties": {
+            "template": "[{{ .Icon }} {{ .PWD }}] "
+          },
+          "style": "powerline",
+          "type": "os"
         },
         {
-            "type": "prompt",
-            "alignment": "left",
-            "segments": [
-                {
-                    "type": "exit",
-                    "style": "powerline",
-                    "foreground": "white",
-                    "properties": {
-                        "display_exit_code": false,
-                        "always_enabled": true,
-                        "error_color": "red",
-                        "prefix": ""
-                    }
-                }
-            ]
+          "properties": {
+            "template": "<cyan>[</><lightGreen>{{ .HEAD }}</><cyan>]</> "
+          },
+          "style": "plain",
+          "type": "git"
         }
-    ]
+      ],
+      "type": "prompt"
+    },
+    {
+      "alignment": "left",
+      "segments": [
+        {
+          "foreground": "#C94A16",
+          "style": "powerline",
+          "type": "exit"
+        },
+        {
+          "foreground": "white",
+          "properties": {
+            "always_enabled": true
+          },
+          "style": "plain",
+          "type": "text"
+        }
+      ],
+      "type": "prompt"
+    }
+  ],
+  "version": 1
 }
