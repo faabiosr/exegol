@@ -1,6 +1,6 @@
 " load vim-plug
 call plug#begin('~/.config/nvim/plugged')
-Plug 'akinsho/bufferline.nvim'
+Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'elzr/vim-json', {'for' : 'json'}
 Plug 'fatih/vim-go'
@@ -115,6 +115,7 @@ map <leader>n :Explore<CR>
 
 " lightline
 let g:lightline = { 'colorscheme': 'onehalfdark' }
+let g:lightline.enable = { 'tabline': '0' }
 
 " fzf
 let g:fzf_command_prefix = 'Fzf'
