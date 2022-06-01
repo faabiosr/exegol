@@ -1,0 +1,21 @@
+[global_config]
+  title_transmit_bg_color = "#1c71d8"
+[keybindings]
+[profiles]
+  [[default]]
+    background_color = "#282c34"
+    cursor_color = "#a3b3cc"
+    font = CaskaydiaCove Nerd Font Mono 11
+    foreground_color = "#dcdfe4"
+    palette = "#282c34:#e06c75:#98c379:#e5c07b:#61afef:#c678dd:#56b6c2:#dcdfe4:#282c34:#e06c75:#98c379:#e5c07b:#61afef:#c678dd:#56b6c2:#dcdfe4"
+    use_system_font = False
+[layouts]
+  [[default]]
+    [[[window0]]]
+      type = Window
+      parent = ""
+    [[[child1]]]
+      type = Terminal
+      parent = window0
+      profile = default
+[plugins]
