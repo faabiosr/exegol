@@ -33,6 +33,9 @@ export GIT_CONFIG_COUNT=1
 export GIT_CONFIG_KEY_0="gpg.program"
 export GIT_CONFIG_VALUE_0="/bin/gpg"
 
+# Git prompt
+source /usr/lib/git-core/git-sh-prompt
+
 # Golang
 GOROOT="/usr/local/go"
 export PATH="${GOROOT}/bin:$PATH"
