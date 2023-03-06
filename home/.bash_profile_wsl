@@ -10,18 +10,8 @@ alias pbpaste='powershell.exe -c Get-Clipboard -Raw'
 
 export WIN_RAW_HOME="$(cmd.exe /c "<nul set /p=%UserProfile%" 2>/dev/null)"
 export WSL_HOME="$(wslpath ${WIN_RAW_HOME})"
-export WSL_DIR_DOWNLOADS="${HOME}/Downloads"
-export WSL_DIR_DESKTOP="${HOME}/Desktop"
-export WSL_DIR_PROJECTS="${HOME}/Projects"
-export WSL_DIR_DOCUMENTS="${HOME}/Documents"
 
 mkdir -p "${WSL_HOME}/Projects"
-
-# Link windows folders
-[ ! -d "${WSL_DIR_DOWNLOADS}" ] && ln -s "${WSL_HOME}/Downloads" "${WSL_DIR_DOWNLOADS}"
-[ ! -d "${WSL_DIR_DESKTOP}" ] && ln -s "${WSL_HOME}/Desktop" "${WSL_DIR_DESKTOP}"
-[ ! -d "${WSL_DIR_PROJECTS}" ] && ln -s "${WSL_HOME}/Projects" "${WSL_DIR_PROJECTS}"
-[ ! -d "${WSL_DIR_DOCUMENTS}" ] && ln -s "${WSL_HOME}/Documents" "${WSL_DIR_DOCUMENTS}"
 
 wsl_sync_ssh () {
     WIN_SSH_DIR="${WSL_HOME}/.ssh"
