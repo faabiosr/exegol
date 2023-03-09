@@ -197,6 +197,13 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
 end
 
+nvim_lsp.pylsp.setup{
+  cmd = {'pylsp'},
+  filetypes = {'python'},
+  capabilities = capabilities,
+  on_attach = on_attach,
+}
+
 nvim_lsp.gopls.setup{
   cmd = {'gopls'},
   capabilities = capabilities,
