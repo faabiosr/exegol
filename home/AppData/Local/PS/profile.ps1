@@ -27,4 +27,4 @@ function UUIDP {
 }
 
 # Init oh-my-posh
-& $(join-path $(scoop prefix oh-my-posh) 'bin\oh-my-posh.exe') --init --shell pwsh --config ~/AppData/Local/OhMyPosh/exegol.json | Invoke-Expression
+& $(scoop which oh-my-posh) --init --shell pwsh --config ~/AppData/Local/OhMyPosh/exegol.json | Invoke-Expression
