@@ -42,7 +42,7 @@
             "experimental.retroTerminalEffect": false,
             "font": 
             {
-                "face": "CaskaydiaCove NFM"
+                "face": "CaskaydiaCove Nerd Font Mono"
             },
             "useAcrylic": true
         },
@@ -51,7 +51,7 @@
             {
                 "font": 
                 {
-                    "face": "CaskaydiaCove NFM"
+                    "face": "CaskaydiaCove Nerd Font Mono"
                 },
                 "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
                 "hidden": false,
@@ -61,7 +61,7 @@
             {
                 "font": 
                 {
-                    "face": "CaskaydiaCove NFM"
+                    "face": "CaskaydiaCove Nerd Font Mono"
                 },
                 "commandline": "wsl.exe --cd \"\\\\wsl$\\Ubuntu-20.04\\home\\fabio\"",
                 "guid": "{07b52e3e-de2c-5db4-bd2d-ba144ed6c273}",
