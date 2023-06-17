@@ -2,6 +2,7 @@
 call plug#begin('~/.config/nvim/plugged')
 Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
 Plug 'bronson/vim-trailing-whitespace'
+Plug 'catppuccin/vim', { 'as': 'catppuccin' }
 Plug 'elzr/vim-json', {'for' : 'json'}
 Plug 'fatih/vim-go'
 Plug 'hrsh7th/cmp-buffer'
@@ -13,7 +14,6 @@ Plug 'itchyny/lightline.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'neovim/nvim-lspconfig'
-Plug 'sonph/onehalf', {'rtp': 'vim/'}
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'Raimondi/delimitMate'
@@ -75,9 +75,8 @@ set conceallevel=2
 " color
 syntax enable
 set t_Co=256
-set background=dark
 set termguicolors
-colorscheme onehalfdark
+colorscheme catppuccin_latte
 
 " file types
 augroup filetypedetect
@@ -114,7 +113,7 @@ let g:netrw_winsize = 25
 map <leader>n :Explore<CR>
 
 " lightline
-let g:lightline = { 'colorscheme': 'onehalfdark' }
+let g:lightline = { 'colorscheme': 'catppuccin_latte' }
 let g:lightline.enable = { 'tabline': '0' }
 
 " fzf
