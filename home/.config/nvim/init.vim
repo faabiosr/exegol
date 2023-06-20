@@ -229,6 +229,23 @@ nvim_lsp.pylsp.setup{
   on_attach = on_attach,
 }
 
+nvim_lsp.solargraph.setup{
+  cmd = {'solargraph', 'stdio'},
+  filetypes = {'ruby'},
+  capabilities = capabilities,
+  flags = {
+    debounce_text_changes = 150,
+  },
+  settings = {
+    solargraph = {
+      solargraph = {
+        diagnostics = false,
+      },
+    },
+  },
+  on_attach = on_attach,
+}
+
 function goimports(wait_ms)
   local params = vim.lsp.util.make_range_params()
   params.context = {only = {"source.organizeImports"}}
