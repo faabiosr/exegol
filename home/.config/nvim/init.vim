@@ -2,7 +2,7 @@
 call plug#begin('~/.config/nvim/plugged')
 Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
 Plug 'bronson/vim-trailing-whitespace'
-Plug 'catppuccin/vim', { 'as': 'catppuccin' }
+Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 Plug 'elzr/vim-json', {'for' : 'json'}
 Plug 'fatih/vim-go'
 Plug 'hrsh7th/cmp-buffer'
@@ -76,7 +76,6 @@ set conceallevel=2
 syntax enable
 set t_Co=256
 set termguicolors
-colorscheme catppuccin_latte
 
 " file types
 augroup filetypedetect
@@ -154,13 +153,19 @@ let g:vim_json_syntax_conceal = 0
 
 " lua plugins configurations
 lua << EOF
+local cmd = vim.cmd
+
+---- core
+
+-- colors
+cmd.colorscheme "catppuccin-latte"
 
 ---- Plugins
 
 -- lualine
 require('lualine').setup({
   options = {
-    theme = "catppuccin",
+    theme = "catppuccin-latte",
   },
 })
 
