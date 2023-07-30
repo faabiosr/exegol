@@ -29,55 +29,23 @@ set ttyfast
 
 set formatoptions+=r
 set encoding=utf-8
-set noshowmode
 set wildmenu
-set number
 set autoindent
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
-set expandtab
-set ruler
-set cursorline
-set laststatus=2
 set incsearch
 set hlsearch
-set ignorecase
-set smartcase
 set backspace=indent,eol,start
 set autoread
 set autowrite
 set noerrorbells
 set showcmd
-set splitbelow
-set splitright
 set hidden
 set fileformats=unix,dos,mac
 set completeopt=menuone,noselect
-set updatetime=3000
 set pumheight=10
 set shortmess+=c
 
-"http://stackoverflow.com/questions/20186975/vim-mac-how-to-copy-to-clipboard-without-pbcopy
-set clipboard^=unnamed
-set clipboard^=unnamedplus
-
-set signcolumn=yes
-
-if has('persistent_undo')
-    set undodir=~/.config/nvim/undo
-    set undofile
-    set undolevels=1000
-    set undoreload=10000
-endif
-
 set viminfo='1000
 set conceallevel=2
-
-" color
-syntax enable
-set t_Co=256
-set termguicolors
 
 " file types
 augroup filetypedetect
@@ -89,14 +57,6 @@ augroup filetypedetect
 augroup END
 
 "========== mappings ==========
-let mapleader=","
-
-" disable arrows
-noremap <Up>    <Nop>
-noremap <Down>  <Nop>
-noremap <Left>  <Nop>
-noremap <Right> <Nop>
-
 " buffer navigation
 map bt :bnext<CR>
 map bT :bprevious<CR>
@@ -147,14 +107,67 @@ let g:vim_json_syntax_conceal = 0
 
 " lua plugins configurations
 lua << EOF
+local opt = vim.opt
+local fn = vim.fn
 local g = vim.g
 local keymap = vim.keymap
 local cmd = vim.cmd
 
+
 ---- core
+
+-- options
+opt.laststatus = 2
+opt.showmode = false
+
+opt.clipboard = "unnamedplus"
+opt.cursorline = true
+
+-- indenting
+opt.expandtab = true
+opt.shiftwidth = 2
+opt.smartindent = true
+opt.tabstop = 2
+opt.softtabstop = 2
+
+opt.fillchars = { eob = " " }
+opt.ignorecase = true
+opt.smartcase = true
+opt.mouse = ""
+
+-- numbers
+opt.number = true
+opt.numberwidth = 2
+opt.ruler = true
+
+-- disable nvim intro
+opt.shortmess:append "sI"
+
+opt.signcolumn = "yes"
+opt.splitbelow = true
+opt.splitright = true
+opt.termguicolors = true
+opt.timeoutlen = 400
+opt.undofile = true
+opt.undodir = fn.expand('~/.config/nvim/undo')
+opt.undolevels = 1000
+opt.undoreload = 10000
+
+-- interval for writing swap file to disk, also used by gitsigns
+opt.updatetime = 250
+
+-- mappings
+g.mapleader = ","
+
+-- disable arrows
+keymap.set('n', '<Up>', '')
+keymap.set('n', '<Down>', '')
+keymap.set('n', '<Left>', '')
+keymap.set('n', '<Right>', '')
 
 -- colors
 cmd.colorscheme "catppuccin-latte"
+
 
 ---- Plugins
 
