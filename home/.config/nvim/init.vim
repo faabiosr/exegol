@@ -14,6 +14,8 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lualine/lualine.nvim'
+Plug 'nvim-tree/nvim-web-devicons'
+Plug 'nvim-tree/nvim-tree.lua'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'Raimondi/delimitMate'
@@ -103,14 +105,6 @@ map bT :bprevious<CR>
 map =j :%!jq<CR>
 
 "========== plugins ==========
-" netrw
-let g:netrw_banner = 0
-let g:netrw_liststyle = 3
-let g:netrw_altv = 1
-let g:netrw_winsize = 25
-
-map <leader>n :Explore<CR>
-
 " fzf
 let g:fzf_command_prefix = 'Fzf'
 let g:fzf_layout = { 'down': '~20%' }
@@ -153,6 +147,8 @@ let g:vim_json_syntax_conceal = 0
 
 " lua plugins configurations
 lua << EOF
+local g = vim.g
+local keymap = vim.keymap
 local cmd = vim.cmd
 
 ---- core
@@ -168,6 +164,68 @@ require('lualine').setup({
     theme = "catppuccin-latte",
   },
 })
+
+-- netrw - disable
+g.loaded_netrw = 1
+g.loaded_netrwPlugin = 1
+
+-- nvim-tree
+require("nvim-tree").setup({
+  disable_netrw = true,
+  hijack_cursor = true,
+  sync_root_with_cwd = true,
+  update_focused_file = {
+    enable = true,
+  },
+  view = {
+    adaptive_size = false,
+    preserve_window_proportions = true,
+  },
+  git = {
+    enable = false,
+    ignore = true,
+  },
+  actions = {
+    open_file = {
+      quit_on_open = true,
+    },
+  },
+  renderer = {
+    root_folder_label = false,
+    icons = {
+      show = {
+        git = false,
+      },
+
+      glyphs = {
+        default = "󰈚",
+        symlink = "",
+        folder = {
+          default = "",
+          empty = "",
+          empty_open = "",
+          open = "",
+          symlink = "",
+          symlink_open = "",
+          arrow_open = "",
+          arrow_closed = "",
+        },
+        git = {
+          unstaged = "✗",
+          staged = "✓",
+          unmerged = "",
+          renamed = "➜",
+          untracked = "★",
+          deleted = "",
+          ignored = "◌",
+        },
+      },
+    },
+  },
+})
+
+keymap.set('n', '<leader>n', '<cmd> NvimTreeToggle <CR>')
+keymap.set('n', '<leader>e', '<cmd> NvimTreeFocus <CR>')
 
 -- bufferline
 require("bufferline").setup{
