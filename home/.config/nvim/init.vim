@@ -10,10 +10,10 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/vim-vsnip'
-Plug 'itchyny/lightline.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lualine/lualine.nvim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'Raimondi/delimitMate'
@@ -112,10 +112,6 @@ let g:netrw_winsize = 25
 
 map <leader>n :Explore<CR>
 
-" lightline
-let g:lightline = { 'colorscheme': 'catppuccin_latte' }
-let g:lightline.enable = { 'tabline': '0' }
-
 " fzf
 let g:fzf_command_prefix = 'Fzf'
 let g:fzf_layout = { 'down': '~20%' }
@@ -158,6 +154,16 @@ let g:vim_json_syntax_conceal = 0
 
 " lua plugins configurations
 lua << EOF
+
+---- Plugins
+
+-- lualine
+require('lualine').setup({
+  options = {
+    theme = "catppuccin",
+  },
+})
+
 -- bufferline
 require("bufferline").setup{
   options = {
