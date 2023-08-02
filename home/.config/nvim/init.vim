@@ -18,6 +18,7 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'nvim-tree/nvim-web-devicons'
 Plug 'nvim-tree/nvim-tree.lua'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'Raimondi/delimitMate'
@@ -48,15 +49,6 @@ set shortmess+=c
 
 set viminfo='1000
 set conceallevel=2
-
-" file types
-augroup filetypedetect
-  autocmd FileType go setlocal noexpandtab shiftwidth=4 tabstop=4
-  autocmd FileType json setlocal expandtab shiftwidth=2 tabstop=2
-  autocmd FileType yaml setlocal expandtab shiftwidth=2 tabstop=2
-  autocmd FileType vim setlocal expandtab shiftwidth=2 softtabstop=2
-  autocmd FileType make setlocal noexpandtab shiftwidth=8 softtabstop=0
-augroup END
 
 "========== mappings ==========
 " buffer navigation
@@ -278,12 +270,18 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
 end
 
+local util = require "lspconfig/util"
+
 nvim_lsp.gopls.setup{
-  cmd = {'gopls'},
+  on_attach = on_attach,
   capabilities = capabilities,
+  cmd = {"gopls"},
+  filetypes = { "go", "gomod", "gowork", "gotmpl" },
+  root_dir = util.root_pattern("go.work", "go.mod", ".git"),
   settings = {
     gopls = {
-      experimentalPostfixCompletions = true,
+      completeUnimported = true,
+      usePlaceholders = true,
       analyses = {
         unusedparams = true,
         shadow = true,
@@ -291,7 +289,6 @@ nvim_lsp.gopls.setup{
       staticcheck = true,
     },
   },
-  on_attach = on_attach,
 }
 
 nvim_lsp.pylsp.setup{
@@ -373,4 +370,17 @@ null_ls.setup({
     end
   end,
 })
+
+-- nvim-treesitter
+local treesitter = require 'nvim-treesitter.configs'
+treesitter.setup {
+  ensure_installed = { "go", "json", "lua", "make", "vimdoc", "vim", "yaml" },
+  highlight = {
+    enable = true,
+    use_languagetree = true,
+  },
+  indent = {
+    enable = true,
+  },
+}
 EOF
