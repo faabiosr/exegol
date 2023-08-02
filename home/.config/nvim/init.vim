@@ -55,9 +55,6 @@ set conceallevel=2
 map bt :bnext<CR>
 map bT :bprevious<CR>
 
-" Format json
-map =j :%!jq<CR>
-
 "========== plugins ==========
 " fzf
 let g:fzf_command_prefix = 'Fzf'
@@ -352,6 +349,7 @@ null_ls.setup({
   sources = {
     null_ls.builtins.formatting.gofumpt,
     null_ls.builtins.formatting.goimports,
+    null_ls.builtins.formatting.jq,
   },
   on_attach = function(client, bufnr)
     if client.supports_method("textDocument/formatting") then
