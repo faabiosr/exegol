@@ -4,7 +4,6 @@ Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 Plug 'elzr/vim-json', {'for' : 'json'}
-Plug 'fatih/vim-go'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-vsnip'
@@ -19,6 +18,7 @@ Plug 'nvim-lualine/lualine.nvim'
 Plug 'nvim-tree/nvim-web-devicons'
 Plug 'nvim-tree/nvim-tree.lua'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'olexsmir/gopher.nvim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'Raimondi/delimitMate'
@@ -62,22 +62,6 @@ let g:fzf_layout = { 'down': '~20%' }
 let g:fzf_preview_window = ''
 
 nmap <C-p> :FzfFiles<cr>
-
-" vim-go
-let g:go_highlight_build_constraints = 1
-let g:go_highlight_extra_types = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_structs = 1
-let g:go_highlight_types = 1
-let g:go_addtags_transform = "snakecase"
-let g:go_gopls_enabled = 0
-let g:go_echo_go_info = 0
-let g:go_def_mapping_enabled = 0
-let g:go_fmt_autosave = 0
-let g:go_imports_autosave = 0
 
 " delimitmate
 let g:delimitMate_expand_cr = 1
@@ -381,4 +365,7 @@ treesitter.setup {
     enable = true,
   },
 }
+
+-- gopher.nvim
+require("gopher").setup({})
 EOF
