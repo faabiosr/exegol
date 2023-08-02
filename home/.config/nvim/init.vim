@@ -90,13 +90,6 @@ let g:go_def_mapping_enabled = 0
 let g:go_fmt_autosave = 0
 let g:go_imports_autosave = 0
 
-augroup go
-  autocmd!
-
-  autocmd FileType go nmap <silent> <leader>t <Plug>(go-test)
-  autocmd FileType go nmap <silent> <Leader>c <Plug>(go-coverage-toggle)
-augroup END
-
 " delimitmate
 let g:delimitMate_expand_cr = 1
 let g:delimitMate_expand_space = 1
