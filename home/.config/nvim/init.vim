@@ -119,7 +119,7 @@ local cmd = vim.cmd
 ---- core
 
 -- options
-opt.laststatus = 2
+opt.laststatus = 3
 opt.showmode = false
 
 opt.clipboard = "unnamedplus"
@@ -161,14 +161,19 @@ opt.updatetime = 250
 -- mappings
 g.mapleader = ","
 
+-- disable some default providers
+for _, provider in ipairs { "node", "perl", "python3", "ruby" } do
+  g["loaded_" .. provider .. "_provider"] = 0
+end
+
+-- colors
+cmd.colorscheme "catppuccin-latte"
+
 -- disable arrows
 keymap.set('n', '<Up>', '')
 keymap.set('n', '<Down>', '')
 keymap.set('n', '<Left>', '')
 keymap.set('n', '<Right>', '')
-
--- colors
-cmd.colorscheme "catppuccin-latte"
 
 
 ---- Plugins
