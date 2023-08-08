@@ -272,21 +272,10 @@ nvim_lsp.gopls.setup{
   },
 }
 
-nvim_lsp.pylsp.setup{
-  cmd = {'pylsp'},
-  filetypes = {'python'},
-  capabilities = capabilities,
-  settings = {
-    pylsp = {
-      plugins = {
-        flake8 = {
-          enabled = true,
-          maxLineLength = 120,
-        },
-      },
-    },
-  },
+nvim_lsp.pyright.setup{
   on_attach = on_attach,
+  capabilities = capabilities,
+  filetypes = {'python'},
 }
 
 nvim_lsp.solargraph.setup{
@@ -331,9 +320,12 @@ local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
 null_ls.setup({
   sources = {
+    null_ls.builtins.formatting.black,
     null_ls.builtins.formatting.gofumpt,
     null_ls.builtins.formatting.goimports,
     null_ls.builtins.formatting.jq,
+    null_ls.builtins.diagnostics.mypy,
+    null_ls.builtins.diagnostics.ruff,
   },
   on_attach = function(client, bufnr)
     if client.supports_method("textDocument/formatting") then
@@ -356,7 +348,17 @@ null_ls.setup({
 -- nvim-treesitter
 local treesitter = require 'nvim-treesitter.configs'
 treesitter.setup {
-  ensure_installed = { "go", "json", "lua", "make", "vimdoc", "vim", "yaml" },
+  ensure_installed = {
+    "bash",
+    "go",
+    "json",
+    "lua",
+    "make",
+    "python",
+    "vimdoc",
+    "vim",
+    "yaml",
+  },
   highlight = {
     enable = true,
     use_languagetree = true,
