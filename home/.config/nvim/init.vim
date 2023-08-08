@@ -50,11 +50,6 @@ set shortmess+=c
 set viminfo='1000
 set conceallevel=2
 
-"========== mappings ==========
-" buffer navigation
-map bt :bnext<CR>
-map bT :bprevious<CR>
-
 "========== plugins ==========
 " delimitmate
 let g:delimitMate_expand_cr = 1
@@ -120,6 +115,10 @@ opt.updatetime = 250
 -- mappings
 g.mapleader = ","
 
+-- buffer navigation
+keymap.set('n', 'bt', '<cmd>bnext<CR>')
+keymap.set('n', 'bT', '<cmd>bprevious<CR>')
+
 -- disable some default providers
 for _, provider in ipairs { "node", "perl", "python3", "ruby" } do
   g["loaded_" .. provider .. "_provider"] = 0
@@ -133,6 +132,7 @@ keymap.set('n', '<Up>', '')
 keymap.set('n', '<Down>', '')
 keymap.set('n', '<Left>', '')
 keymap.set('n', '<Right>', '')
+
 
 
 ---- Plugins
