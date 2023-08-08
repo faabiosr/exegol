@@ -56,13 +56,6 @@ map bt :bnext<CR>
 map bT :bprevious<CR>
 
 "========== plugins ==========
-" fzf
-let g:fzf_command_prefix = 'Fzf'
-let g:fzf_layout = { 'down': '~20%' }
-let g:fzf_preview_window = ''
-
-nmap <C-p> :FzfFiles<cr>
-
 " delimitmate
 let g:delimitMate_expand_cr = 1
 let g:delimitMate_expand_space = 1
@@ -224,6 +217,15 @@ require("bufferline").setup{
     separator_style = "thin",
   }
 }
+
+-- fzf
+g.fzf_command_prefix = 'Fzf'
+g.fzf_layout = {
+  down = '~20%'
+}
+
+g.fzf_preview_window = ''
+keymap.set('n', '<C-p>', '<cmd>FzfFiles<CR>')
 
 -- lspconfig
 local capabilities = vim.lsp.protocol.make_client_capabilities()
