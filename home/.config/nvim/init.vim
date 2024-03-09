@@ -289,9 +289,7 @@ nvim_lsp.solargraph.setup{
   },
   settings = {
     solargraph = {
-      solargraph = {
-        diagnostics = false,
-      },
+      diagnostics = false,
     },
   },
   on_attach = on_attach,
