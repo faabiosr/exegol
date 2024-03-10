@@ -122,8 +122,5 @@ PROMPT_COMMAND='__git_ps1 "\[\e[0;36m\][\w]\[\e[39m\]" " " " \[\e[0;36m\][%s\[\e
 # Search for a binary path inside python local
 [ -d "${HOME}/.local/bin" ] && export PATH="${HOME}/.local/bin:$PATH"
 
-# Load asdf
-if [ -r "${HOME}/.asdf" ]; then
-	source "${HOME}/.asdf/asdf.sh"
-	source "${HOME}/.asdf/completions/asdf.bash"
-fi
+# Load mise
+eval "$(/home/fabio/.local/bin/mise activate bash)"

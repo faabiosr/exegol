@@ -35,7 +35,3 @@ export GIT_CONFIG_VALUE_0="/bin/gpg"
 
 # Git prompt
 source /usr/lib/git-core/git-sh-prompt
-
-# Golang
-GOROOT="/usr/local/go"
-export PATH="${GOROOT}/bin:$PATH"
