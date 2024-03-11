@@ -127,15 +127,14 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagn
 vim.keymap.set('n', 'bt', '<cmd>bnext<CR>')
 vim.keymap.set('n', 'bT', '<cmd>bprevious<CR>')
 
+-- Disable default providers
+for _, provider in ipairs { "node", "perl", "python3", "ruby" } do
+  vim.g['loaded_' .. provider .. '_provider'] = 0
+end
+
 -- Set color scheme
 vim.cmd.colorscheme "catppuccin-latte"
 
-
-
--- disable some default providers
-for _, provider in ipairs { "node", "perl", "python3", "ruby" } do
-  vim.g["loaded_" .. provider .. "_provider"] = 0
-end
 
 ---- Plugins
 
@@ -270,27 +269,6 @@ nvim_lsp.gopls.setup{
   },
 }
 
-nvim_lsp.pyright.setup{
-  on_attach = on_attach,
-  capabilities = capabilities,
-  filetypes = {'python'},
-}
-
-nvim_lsp.solargraph.setup{
-  cmd = {'solargraph', 'stdio'},
-  filetypes = {'ruby'},
-  capabilities = capabilities,
-  flags = {
-    debounce_text_changes = 150,
-  },
-  settings = {
-    solargraph = {
-      diagnostics = false,
-    },
-  },
-  on_attach = on_attach,
-}
-
 local cmp = require 'cmp'
 cmp.setup {
   snippet = {
@@ -350,7 +328,6 @@ treesitter.setup {
     "json",
     "lua",
     "make",
-    "python",
     "vimdoc",
     "vim",
     "yaml",
