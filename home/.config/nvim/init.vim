@@ -24,32 +24,6 @@ Plug 'tpope/vim-surround'
 Plug 'Raimondi/delimitMate'
 call plug#end()
 
-"========== settings ==========
-set nocompatible
-filetype plugin indent on
-
-set ttyfast
-
-set formatoptions+=r
-set encoding=utf-8
-set wildmenu
-set autoindent
-set incsearch
-set hlsearch
-set backspace=indent,eol,start
-set autoread
-set autowrite
-set noerrorbells
-set showcmd
-set hidden
-set fileformats=unix,dos,mac
-set completeopt=menuone,noselect
-set pumheight=10
-set shortmess+=c
-
-set viminfo='1000
-set conceallevel=2
-
 "========== plugins ==========
 " delimitmate
 let g:delimitMate_expand_cr = 1
@@ -63,77 +37,105 @@ let g:vim_json_syntax_conceal = 0
 
 " lua plugins configurations
 lua << EOF
-local opt = vim.opt
-local fn = vim.fn
-local g = vim.g
-local keymap = vim.keymap
-local cmd = vim.cmd
+-- # Neovim configuration
+
+-- Set <comma> as the leader key
+vim.g.mapleader = ','
+vim.g.maplocalleader = ','
+
+-- Format options
+vim.opt.formatoptions:append 'r'
+
+-- Insert mode completion
+vim.opt.completeopt = 'menuone,noselect'
+
+-- Make line numbers and ruler as default
+vim.opt.number = true
+vim.opt.numberwidth = 2
+vim.opt.ruler = true
+
+-- Disable mouse mode
+vim.opt.mouse = ''
+
+-- Don't show the mode, since it's already in status line
+vim.opt.showmode = false
+
+-- Number of items to show in the popup menu
+vim.opt.pumheight = 10
+
+-- Sync clipboard between OS and Neovim
+vim.opt.clipboard = 'unnamedplus'
+
+-- Save undo history
+vim.opt.undofile = true
+vim.opt.undolevels = 200
+vim.opt.undoreload = 2000
+
+-- Case-insensitive searching UNLESS \C or capital in search
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+
+-- Keep signcolumns on by default
+vim.opt.signcolumn = 'yes'
+
+-- Decrease update time: interval for writing swap file to disk
+vim.opt.updatetime = 250
+vim.opt.timeoutlen = 300
+
+-- Configure how new splits should be opened
+vim.opt.splitright = true
+vim.opt.splitbelow = true
+
+-- Show which line your cursor is on
+vim.opt.cursorline = true
+
+-- Minimal number of screen lines to keep about and below the cursor
+vim.opt.scrolloff = 10
+
+-- Characters to fill the statuslines
+vim.opt.fillchars = { eob = " " }
+
+-- Disable neovim intro
+vim.opt.shortmess:append 'csI'
+
+-- Indenting
+vim.opt.expandtab = true
+vim.opt.shiftwidth = 2
+vim.opt.smartindent = true
+vim.opt.tabstop = 2
+vim.opt.softtabstop = 2
+
+-- Disable netrw
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- Set highlight on search, but clear on pressing <Esc> in normal mode
+vim.opt.hlsearch = true
+vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+
+-- Disable arrows navigation
+vim.keymap.set('n', '<Up>', '')
+vim.keymap.set('n', '<Down>', '')
+vim.keymap.set('n', '<Left>', '')
+vim.keymap.set('n', '<Right>', '')
+
+-- Diagnostic keymaps
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
+
+-- Buffer navigation
+vim.keymap.set('n', 'bt', '<cmd>bnext<CR>')
+vim.keymap.set('n', 'bT', '<cmd>bprevious<CR>')
+
+-- Set color scheme
+vim.cmd.colorscheme "catppuccin-latte"
 
 
----- core
-
--- options
-opt.laststatus = 3
-opt.showmode = false
-
-opt.clipboard = "unnamedplus"
-opt.cursorline = true
-
--- indenting
-opt.expandtab = true
-opt.shiftwidth = 2
-opt.smartindent = true
-opt.tabstop = 2
-opt.softtabstop = 2
-
-opt.fillchars = { eob = " " }
-opt.ignorecase = true
-opt.smartcase = true
-opt.mouse = ""
-
--- numbers
-opt.number = true
-opt.numberwidth = 2
-opt.ruler = true
-
--- disable nvim intro
-opt.shortmess:append "sI"
-
-opt.signcolumn = "yes"
-opt.splitbelow = true
-opt.splitright = true
-opt.termguicolors = true
-opt.timeoutlen = 400
-opt.undofile = true
-opt.undodir = fn.expand('~/.config/nvim/undo')
-opt.undolevels = 1000
-opt.undoreload = 10000
-
--- interval for writing swap file to disk, also used by gitsigns
-opt.updatetime = 250
-
--- mappings
-g.mapleader = ","
-
--- buffer navigation
-keymap.set('n', 'bt', '<cmd>bnext<CR>')
-keymap.set('n', 'bT', '<cmd>bprevious<CR>')
 
 -- disable some default providers
 for _, provider in ipairs { "node", "perl", "python3", "ruby" } do
-  g["loaded_" .. provider .. "_provider"] = 0
+  vim.g["loaded_" .. provider .. "_provider"] = 0
 end
-
--- colors
-cmd.colorscheme "catppuccin-latte"
-
--- disable arrows
-keymap.set('n', '<Up>', '')
-keymap.set('n', '<Down>', '')
-keymap.set('n', '<Left>', '')
-keymap.set('n', '<Right>', '')
-
-
 
 ---- Plugins
 
@@ -143,10 +145,6 @@ require('lualine').setup({
     theme = "catppuccin-latte",
   },
 })
-
--- netrw - disable
-g.loaded_netrw = 1
-g.loaded_netrwPlugin = 1
 
 -- nvim-tree
 require("nvim-tree").setup({
@@ -203,8 +201,8 @@ require("nvim-tree").setup({
   },
 })
 
-keymap.set('n', '<leader>n', '<cmd> NvimTreeToggle <CR>')
-keymap.set('n', '<leader>e', '<cmd> NvimTreeFocus <CR>')
+vim.keymap.set('n', '<leader>n', '<cmd> NvimTreeToggle <CR>')
+vim.keymap.set('n', '<leader>e', '<cmd> NvimTreeFocus <CR>')
 
 -- bufferline
 require("bufferline").setup{
@@ -219,13 +217,13 @@ require("bufferline").setup{
 }
 
 -- fzf
-g.fzf_command_prefix = 'Fzf'
-g.fzf_layout = {
+vim.g.fzf_command_prefix = 'Fzf'
+vim.g.fzf_layout = {
   down = '~20%'
 }
 
-g.fzf_preview_window = ''
-keymap.set('n', '<C-p>', '<cmd>FzfFiles<CR>')
+vim.g.fzf_preview_window = ''
+vim.keymap.set('n', '<C-p>', '<cmd>FzfFiles<CR>')
 
 -- lspconfig
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -249,8 +247,6 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
   buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-  buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
 end
 
 local util = require "lspconfig/util"
@@ -370,4 +366,6 @@ treesitter.setup {
 
 -- gopher.nvim
 require("gopher").setup({})
+
+-- vim: ts=2 sts=2 sw=2 et
 EOF
