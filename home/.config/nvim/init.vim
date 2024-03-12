@@ -3,7 +3,6 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
-Plug 'elzr/vim-json', {'for' : 'json'}
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-vsnip'
@@ -23,10 +22,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'echasnovski/mini.pairs', { 'branch': 'stable' }
 call plug#end()
-
-"========== plugins ==========
-" vim-json
-let g:vim_json_syntax_conceal = 0
 
 " lua plugins configurations
 lua << EOF
