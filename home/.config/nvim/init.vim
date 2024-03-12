@@ -21,17 +21,10 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'olexsmir/gopher.nvim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
-Plug 'Raimondi/delimitMate'
+Plug 'echasnovski/mini.pairs', { 'branch': 'stable' }
 call plug#end()
 
 "========== plugins ==========
-" delimitmate
-let g:delimitMate_expand_cr = 1
-let g:delimitMate_expand_space = 1
-let g:delimitMate_smart_quotes = 1
-let g:delimitMate_expand_inside_quotes = 0
-let g:delimitMate_smart_matchpairs = '^\%(\w\|\$\)'
-
 " vim-json
 let g:vim_json_syntax_conceal = 0
 
@@ -134,6 +127,9 @@ end
 
 -- Set color scheme
 vim.cmd.colorscheme "catppuccin-latte"
+
+-- Autoclose (brackets, parentesis and more)
+require('mini.pairs').setup()
 
 
 ---- Plugins
