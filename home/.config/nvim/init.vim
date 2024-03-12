@@ -1,6 +1,5 @@
 " load vim-plug
 call plug#begin('~/.config/nvim/plugged')
-Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 Plug 'hrsh7th/cmp-buffer'
@@ -21,6 +20,7 @@ Plug 'olexsmir/gopher.nvim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'echasnovski/mini.pairs', { 'branch': 'stable' }
+Plug 'echasnovski/mini.tabline', { 'branch': 'stable' }
 call plug#end()
 
 " lua plugins configurations
@@ -126,6 +126,9 @@ vim.cmd.colorscheme "catppuccin-latte"
 -- Autoclose (brackets, parentesis and more)
 require('mini.pairs').setup()
 
+-- Tabline (for buffers)
+require('mini.tabline').setup({ show_icons = false})
+
 
 ---- Plugins
 
@@ -193,18 +196,6 @@ require("nvim-tree").setup({
 
 vim.keymap.set('n', '<leader>n', '<cmd> NvimTreeToggle <CR>')
 vim.keymap.set('n', '<leader>e', '<cmd> NvimTreeFocus <CR>')
-
--- bufferline
-require("bufferline").setup{
-  options = {
-    numbers = "none",
-    diagnostics = false,
-    show_buffer_icons = false,
-    show_buffer_close_icons = false,
-    show_close_icon = false,
-    separator_style = "thin",
-  }
-}
 
 -- fzf
 vim.g.fzf_command_prefix = 'Fzf'
