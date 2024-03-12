@@ -112,8 +112,8 @@ vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
 
 -- Buffer navigation
-vim.keymap.set('n', 'bt', '<cmd>bnext<CR>')
-vim.keymap.set('n', 'bT', '<cmd>bprevious<CR>')
+vim.keymap.set('n', '[b', '<Cmd>bprevious<CR>', { desc = 'Go to previous [B]uffer' })
+vim.keymap.set('n', ']b', '<Cmd>bnext<CR>', { desc = 'Go to next [B]uffer' })
 
 -- Disable default providers
 for _, provider in ipairs { "node", "perl", "python3", "ruby" } do
