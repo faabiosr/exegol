@@ -1,7 +1,6 @@
 " load vim-plug
 call plug#begin('~/.config/nvim/plugged')
 Plug 'bronson/vim-trailing-whitespace'
-Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-vsnip'
@@ -12,15 +11,10 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-lualine/lualine.nvim'
-Plug 'nvim-tree/nvim-web-devicons'
-Plug 'nvim-tree/nvim-tree.lua'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'olexsmir/gopher.nvim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
-Plug 'echasnovski/mini.pairs', { 'branch': 'stable' }
-Plug 'echasnovski/mini.tabline', { 'branch': 'stable' }
 call plug#end()
 
 " lua plugins configurations
@@ -144,83 +138,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-
--- Set color scheme
-vim.cmd.colorscheme "catppuccin-latte"
-
--- Autoclose (brackets, parentesis and more)
-require('mini.pairs').setup()
-
--- Tabline (for buffers)
-require('mini.tabline').setup({ show_icons = false})
-
-
 ---- Plugins
-
--- lualine
-require('lualine').setup({
-  options = {
-    theme = "catppuccin-latte",
-  },
-})
-
--- nvim-tree
-require("nvim-tree").setup({
-  disable_netrw = true,
-  hijack_cursor = true,
-  sync_root_with_cwd = true,
-  update_focused_file = {
-    enable = true,
-  },
-  view = {
-    adaptive_size = false,
-    preserve_window_proportions = true,
-  },
-  git = {
-    enable = false,
-    ignore = true,
-  },
-  actions = {
-    open_file = {
-      quit_on_open = true,
-    },
-  },
-  renderer = {
-    root_folder_label = false,
-    icons = {
-      show = {
-        git = false,
-      },
-
-      glyphs = {
-        default = "󰈚",
-        symlink = "",
-        folder = {
-          default = "",
-          empty = "",
-          empty_open = "",
-          open = "",
-          symlink = "",
-          symlink_open = "",
-          arrow_open = "",
-          arrow_closed = "",
-        },
-        git = {
-          unstaged = "✗",
-          staged = "✓",
-          unmerged = "",
-          renamed = "➜",
-          untracked = "★",
-          deleted = "",
-          ignored = "◌",
-        },
-      },
-    },
-  },
-})
-
-vim.keymap.set('n', '<leader>n', '<cmd> NvimTreeToggle <CR>')
-vim.keymap.set('n', '<leader>e', '<cmd> NvimTreeFocus <CR>')
 
 -- fzf
 vim.g.fzf_command_prefix = 'Fzf'
@@ -352,7 +270,111 @@ treesitter.setup {
 require("gopher").setup({})
 
 -- lazy
-require('lazy').setup()
+require('lazy').setup({
+  { -- color scheme
+    'catppuccin/nvim',
+    name = 'catppuccin',
+    priority = 1000,
+    init = function ()
+      vim.cmd.colorscheme 'catppuccin-latte'
+    end,
+  },
+
+  { -- Autoclose (brackets, parentesis and more)
+    'echasnovski/mini.pairs',
+    version = '*',
+    config = function()
+      require('mini.pairs').setup()
+    end,
+  },
+
+  { -- Tabline (for buffers)
+    'echasnovski/mini.tabline',
+    version = '*',
+    config = function()
+      require('mini.tabline').setup({
+        show_icons = false,
+      })
+    end,
+  },
+
+  { -- File explorer
+    'nvim-tree/nvim-tree.lua',
+    version = '*',
+    lazy = false,
+    dependencies = {
+      'nvim-tree/nvim-web-devicons',
+    },
+    config = function()
+      require('nvim-tree').setup({
+        disable_netrw = true,
+        hijack_cursor = true,
+        sync_root_with_cwd = true,
+        update_focused_file = {
+          enable = true,
+        },
+        view = {
+          adaptive_size = false,
+          preserve_window_proportions = true,
+        },
+        git = {
+          enable = false,
+          ignore = true,
+        },
+        actions = {
+          open_file = {
+            quit_on_open = true,
+          },
+        },
+        renderer = {
+          root_folder_label = false,
+          icons = {
+            show = {
+              git = false,
+            },
+            glyphs = {
+              default = "󰈚",
+              symlink = "",
+              folder = {
+                default = "",
+                empty = "",
+                empty_open = "",
+                open = "",
+                symlink = "",
+                symlink_open = "",
+                arrow_open = "",
+                arrow_closed = "",
+              },
+              git = {
+                unstaged = "✗",
+                staged = "✓",
+                unmerged = "",
+                renamed = "➜",
+                untracked = "★",
+                deleted = "",
+                ignored = "◌",
+              },
+            },
+          },
+        },
+      })
+    end,
+    init = function()
+      vim.keymap.set('n', '<leader>n', '<cmd>NvimTreeToggle<CR>')
+      vim.keymap.set('n', '<leader>e', '<cmd>NvimTreeFocus<CR>')
+    end,
+  },
+
+  { -- Statusline
+    'nvim-lualine/lualine.nvim',
+    dependencies = {
+      'nvim-tree/nvim-web-devicons',
+    },
+    config = function()
+      require('lualine').setup()
+    end,
+  }
+})
 
 -- vim: ts=2 sts=2 sw=2 et
 EOF
