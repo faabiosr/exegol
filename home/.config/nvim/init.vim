@@ -136,6 +136,15 @@ for _, provider in ipairs { "node", "perl", "python3", "ruby" } do
   vim.g['loaded_' .. provider .. '_provider'] = 0
 end
 
+-- Install `lazy.nvim` plugin manager
+local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
+if not vim.loop.fs_stat(lazypath) then
+  local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
+  vim.fn.system { 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath }
+end
+vim.opt.rtp:prepend(lazypath)
+
+
 -- Set color scheme
 vim.cmd.colorscheme "catppuccin-latte"
 
@@ -341,6 +350,9 @@ treesitter.setup {
 
 -- gopher.nvim
 require("gopher").setup({})
+
+-- lazy
+require('lazy').setup()
 
 -- vim: ts=2 sts=2 sw=2 et
 EOF
