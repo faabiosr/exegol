@@ -1,4 +1,3 @@
-lua << EOF
 -- # Neovim configuration
 
 -- Set <comma> as the leader key
@@ -493,4 +492,3 @@ require('lazy').setup({
 })
 
 -- vim: ts=2 sts=2 sw=2 et
-EOF
