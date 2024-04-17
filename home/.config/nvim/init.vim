@@ -7,14 +7,9 @@ Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/vim-vsnip'
 Plug 'jose-elias-alvarez/null-ls.nvim'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'olexsmir/gopher.nvim'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-surround'
 call plug#end()
 
 " lua plugins configurations
@@ -140,15 +135,6 @@ vim.opt.rtp:prepend(lazypath)
 
 ---- Plugins
 
--- fzf
-vim.g.fzf_command_prefix = 'Fzf'
-vim.g.fzf_layout = {
-  down = '~20%'
-}
-
-vim.g.fzf_preview_window = ''
-vim.keymap.set('n', '<C-p>', '<cmd>FzfFiles<CR>')
-
 -- lspconfig
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
@@ -243,34 +229,33 @@ null_ls.setup({
     end
   end,
 })
-
--- nvim-treesitter
-local treesitter = require 'nvim-treesitter.configs'
-treesitter.setup {
-  ensure_installed = {
-    "bash",
-    "go",
-    "json",
-    "lua",
-    "make",
-    "vimdoc",
-    "vim",
-    "yaml",
-  },
-  highlight = {
-    enable = true,
-    use_languagetree = true,
-  },
-  indent = {
-    enable = true,
-  },
-}
-
 -- gopher.nvim
 require("gopher").setup({})
 
 -- lazy
 require('lazy').setup({
+  -- Detect tabstop and shiftwidth automatically
+  'tpope/vim-sleuth',
+
+  { -- Fuzzy finder
+    'junegunn/fzf.vim',
+    dependencies = {
+      {
+        'junegunn/fzf',
+        build = './install --bin --no-update-rc',
+      },
+    },
+    init = function()
+      vim.g.fzf_command_prefix = 'Fzf'
+      vim.g.fzf_layout = {
+        down = '~20%'
+      }
+
+      vim.g.fzf_preview_window = ''
+      vim.keymap.set('n', '<C-p>', '<cmd>FzfFiles<CR>')
+    end,
+  },
+
   { -- color scheme
     'catppuccin/nvim',
     name = 'catppuccin',
@@ -297,6 +282,12 @@ require('lazy').setup({
       })
     end,
   },
+
+  -- Add/delete/replace surroundinds (brackets, quotes, etc.)
+  'tpope/vim-surround',
+
+  -- A Git wrapper so awesome, it should be illegal
+  'tpope/vim-fugitive',
 
   { -- File explorer
     'nvim-tree/nvim-tree.lua',
@@ -373,8 +364,40 @@ require('lazy').setup({
     config = function()
       require('lualine').setup()
     end,
-  }
+  },
+
+  { -- Highlight, edit, and navigate code
+    'nvim-treesitter/nvim-treesitter',
+    build = ':TSUpdate',
+    opts = {
+      ensure_installed = {
+        'bash',
+        'c',
+        'go',
+        'html',
+        'json',
+        'lua',
+        'luadoc',
+        'make',
+        'markdown',
+        'vim',
+        'vimdoc',
+        'yaml',
+      },
+      auto_install = true,
+      highlight = {
+        enable = true,
+      },
+      indent = {
+        enable = true,
+      },
+    },
+    config = function(_, opts)
+      require('nvim-treesitter.configs').setup(opts)
+    end,
+  },
 })
 
 -- vim: ts=2 sts=2 sw=2 et
 EOF
+
