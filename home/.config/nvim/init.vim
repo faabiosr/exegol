@@ -54,6 +54,9 @@ vim.opt.pumheight = 10
 -- Sync clipboard between OS and Neovim
 vim.opt.clipboard = 'unnamedplus'
 
+-- Enable break indent
+vim.opt.breakindent = true
+
 -- Save undo history
 vim.opt.undofile = true
 vim.opt.undolevels = 200
@@ -73,6 +76,10 @@ vim.opt.timeoutlen = 300
 -- Configure how new splits should be opened
 vim.opt.splitright = true
 vim.opt.splitbelow = true
+
+-- Display certain whitespace characters in the editor.
+vim.opt.list = true
+vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
 -- Show which line your cursor is on
 vim.opt.cursorline = true
@@ -114,6 +121,15 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagn
 -- Buffer navigation
 vim.keymap.set('n', '[b', '<Cmd>bprevious<CR>', { desc = 'Go to previous [B]uffer' })
 vim.keymap.set('n', ']b', '<Cmd>bnext<CR>', { desc = 'Go to next [B]uffer' })
+
+-- Highlight when yanking (copying) text
+vim.api.nvim_create_autocmd('TextYankPost', {
+  desc = 'Highlight when yanking (copying) text',
+  group = vim.api.nvim_create_augroup('exegol-highlight-yank', { clear = true }),
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+})
 
 -- Disable default providers
 for _, provider in ipairs { "node", "perl", "python3", "ruby" } do
