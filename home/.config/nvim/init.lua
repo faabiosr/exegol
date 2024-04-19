@@ -61,7 +61,7 @@ vim.opt.cursorline = true
 vim.opt.scrolloff = 10
 
 -- Characters to fill the statuslines
-vim.opt.fillchars = { eob = " " }
+vim.opt.fillchars = { eob = ' ' }
 
 -- Disable neovim intro
 vim.opt.shortmess:append 'csI'
@@ -105,7 +105,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 -- Disable default providers
-for _, provider in ipairs { "node", "perl", "python3", "ruby" } do
+for _, provider in ipairs { 'node', 'perl', 'python3', 'ruby' } do
   vim.g['loaded_' .. provider .. '_provider'] = 0
 end
 
@@ -117,9 +117,8 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-
 -- lazy
-require('lazy').setup({
+require('lazy').setup {
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
 
@@ -134,7 +133,7 @@ require('lazy').setup({
     init = function()
       vim.g.fzf_command_prefix = 'Fzf'
       vim.g.fzf_layout = {
-        down = '~20%'
+        down = '~20%',
       }
 
       vim.g.fzf_preview_window = ''
@@ -202,15 +201,7 @@ require('lazy').setup({
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
       local servers = {
-        lua_ls = {
-          settings = {
-            Lua = {
-              completion = {
-                callSnippet = 'Replace',
-              },
-            },
-          },
-        },
+        eslint = {},
         gopls = {
           settings = {
             gopls = {
@@ -221,18 +212,30 @@ require('lazy').setup({
                 shadow = true,
               },
               staticcheck = true,
-            }
+            },
           },
         },
+        lua_ls = {
+          settings = {
+            Lua = {
+              completion = {
+                callSnippet = 'Replace',
+              },
+            },
+          },
+        },
+        tsserver = {},
       }
 
       require('mason').setup()
 
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
-        'stylua', -- Used to format Lua code
-        'gopls',
+        'goimports',
         'gofumpt',
+        'gopls',
+        'prettier',
+        'stylua', -- Used to format Lua code
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -274,8 +277,10 @@ require('lazy').setup({
         }
       end,
       formatters_by_ft = {
-        lua = { 'stylua' },
         go = { 'goimports', 'gofumpt' },
+        javascript = { 'prettier' },
+        lua = { 'stylua' },
+        typescript = { 'prettier' },
       },
     },
   },
@@ -342,7 +347,7 @@ require('lazy').setup({
     'catppuccin/nvim',
     name = 'catppuccin',
     priority = 1000,
-    init = function ()
+    init = function()
       vim.cmd.colorscheme 'catppuccin-latte'
     end,
   },
@@ -359,9 +364,9 @@ require('lazy').setup({
     'echasnovski/mini.tabline',
     version = '*',
     config = function()
-      require('mini.tabline').setup({
+      require('mini.tabline').setup {
         show_icons = false,
-      })
+      }
     end,
   },
 
@@ -379,7 +384,7 @@ require('lazy').setup({
       'nvim-tree/nvim-web-devicons',
     },
     config = function()
-      require('nvim-tree').setup({
+      require('nvim-tree').setup {
         disable_netrw = true,
         hijack_cursor = true,
         sync_root_with_cwd = true,
@@ -406,31 +411,31 @@ require('lazy').setup({
               git = false,
             },
             glyphs = {
-              default = "󰈚",
-              symlink = "",
+              default = '󰈚',
+              symlink = '',
               folder = {
-                default = "",
-                empty = "",
-                empty_open = "",
-                open = "",
-                symlink = "",
-                symlink_open = "",
-                arrow_open = "",
-                arrow_closed = "",
+                default = '',
+                empty = '',
+                empty_open = '',
+                open = '',
+                symlink = '',
+                symlink_open = '',
+                arrow_open = '',
+                arrow_closed = '',
               },
               git = {
-                unstaged = "✗",
-                staged = "✓",
-                unmerged = "",
-                renamed = "➜",
-                untracked = "★",
-                deleted = "",
-                ignored = "◌",
+                unstaged = '✗',
+                staged = '✓',
+                unmerged = '',
+                renamed = '➜',
+                untracked = '★',
+                deleted = '',
+                ignored = '◌',
               },
             },
           },
         },
-      })
+      }
     end,
     init = function()
       vim.keymap.set('n', '<leader>n', '<cmd>NvimTreeToggle<CR>')
@@ -457,11 +462,13 @@ require('lazy').setup({
         'c',
         'go',
         'html',
+        'javascript',
         'json',
         'lua',
         'luadoc',
         'make',
         'markdown',
+        'typescript',
         'vim',
         'vimdoc',
         'yaml',
@@ -482,13 +489,12 @@ require('lazy').setup({
   { -- Golang tools
     'olexsmir/gopher.nvim',
     dependencies = {
-      'nvim-lua/plenary.nvim'
+      'nvim-lua/plenary.nvim',
     },
     config = function()
-      require('gopher').setup({})
+      require('gopher').setup {}
     end,
   },
-
-})
+}
 
 -- vim: ts=2 sts=2 sw=2 et
