@@ -9,9 +9,7 @@
 
 # Aliases
 Set-Alias vim "$(scoop prefix neovim)\bin\nvim.exe"
-
 Set-Alias godoc "godoc -http='127.0.0.1:6060'"
-
 Set-Alias ff "firefox"
 
 # Functions
@@ -27,4 +25,4 @@ function UUIDP {
 }
 
 # Init oh-my-posh
-& $(scoop which oh-my-posh) --init --shell pwsh --config ~/AppData/Local/OhMyPosh/exegol.json | Invoke-Expression
+oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH/exegol.json" | Invoke-Expression

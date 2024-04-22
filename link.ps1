@@ -1,49 +1,49 @@
 <#
 .SYNOPSIS
-  Link script
+  Link all exegol files.
 .DESCRIPTION
   Part of https://github.com/faabiosr/exegol
 .NOTES
   Author: Fabio Ribeiro - faabiosr@gmail.com
 #>
 
+#Requires -RunAsAdministrator
+
 param(
-    [switch]$undo
+	[Parameter(Mandatory = $false, HelpMessage = "Link action")]
+	[switch]
+	$Undo
 )
 
-$files = @(
-    '.config\nvim\init.vim',
-    'AppData\Local\OhMyPosh\exegol.json',
-    'AppData\Local\PS\profile.ps1',
-    'scoop\apps\windows-terminal\current\settings\settings.json'
-)
+$Script = "$PSScriptRoot"
+$HomeDir = "$script\home"
 
-$script ="$PSScriptRoot"
-$homeDir = "$script\home"
+$excluded = @(".bash*", ".tmux.*")
+$Files = Get-ChildItem -Path "$HomeDir" -Attributes !Directory -Recurse -Name -Exclude $excluded
 
-if ($undo) {
-    Write-Host "unlinking files"
-    foreach ($file in $files) {
-        Write-Host "=> $file"
-        if (Test-Path "$HOME\$file") {
-            Remove-Item -Path "$HOME\$file"
-        }
-    }
+function Link {
+	Write-Host "linking files"
 
-    # Remove profile link.
-    Remove-Item -Path $profile
-
-    return
+	$Files | ForEach-Object {
+		Write-Host "=> $_"
+		$Target = $(Join-Path $HomeDir $_)
+		$Path = $(Join-Path $HOME $_)
+		New-Item -ItemType Directory -Path $(Split-Path -Path $Path) -Force | Out-Null
+		New-Item -ItemType SymbolicLink -Target $Target -Path $Path -Force | Out-Null
+	}
 }
 
-Write-Host "linking files"
-foreach ($file in $files) {
-    Write-Host "=> $file"
-    New-Item -ItemType Directory -Path (Split-Path -Path "$HOME\$file") -Force | Out-Null
-    New-Item -ItemType SymbolicLink -Path "$HOME\$file" -Target "$homeDir\$file" -Force | Out-Null
+function Unlink {
+	Write-Host "unlinking files"
+
+	$Files | ForEach-Object {
+		Write-Host "=> $_"
+		$Path = $(Join-Path $HOME $_)
+
+		if (Test-Path $Path) {
+			Remove-Item -Path $Path
+		}
+	}	
 }
 
-# Setup profile
-if (!(Test-Path $profile)) {
-    ". $HOME\AppData\Local\PS\profile.ps1" | Out-File $profile -Force
-}
+($Undo) ? (Unlink) : (Link)
