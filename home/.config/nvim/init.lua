@@ -224,6 +224,7 @@ require('lazy').setup {
             },
           },
         },
+        pyright = {},
         tsserver = {},
       }
 
@@ -231,10 +232,13 @@ require('lazy').setup {
 
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
+        'black',
         'goimports',
         'gofumpt',
         'gopls',
+        'isort',
         'prettier',
+        'ruff',
         'stylua', -- Used to format Lua code
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
@@ -280,6 +284,7 @@ require('lazy').setup {
         go = { 'goimports', 'gofumpt' },
         javascript = { 'prettier' },
         lua = { 'stylua' },
+        python = { 'black', 'isort' },
         typescript = { 'prettier' },
       },
     },
@@ -468,6 +473,10 @@ require('lazy').setup {
         'luadoc',
         'make',
         'markdown',
+        'ninja',
+        'python',
+        'rst',
+        'toml',
         'typescript',
         'vim',
         'vimdoc',
