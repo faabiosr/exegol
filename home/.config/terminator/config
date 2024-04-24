@@ -3,12 +3,14 @@
 [keybindings]
 [profiles]
   [[default]]
-    background_color = "#282c34"
-    cursor_color = "#a3b3cc"
-    font = CaskaydiaCove Nerd Font Mono 11
-    foreground_color = "#dcdfe4"
-    palette = "#282c34:#e06c75:#98c379:#e5c07b:#61afef:#c678dd:#56b6c2:#dcdfe4:#282c34:#e06c75:#98c379:#e5c07b:#61afef:#c678dd:#56b6c2:#dcdfe4"
+    background_color = "#eff1f5"
+    cursor_color = "#dc8a78"
+    font = CaskaydiaCove Nerd Font Mono 12
+    foreground_color = "#4c4f69"
+    palette = "#5c5f77:#d20f39:#40a02b:#df8e1d:#1e66f5:#ea76cb:#179299:#acb0be:#6c6f85:#d20f39:#40a02b:#df8e1d:#1e66f5:#ea76cb:#179299:#bcc0cc"
     use_system_font = False
+    background_image = None
+
 [layouts]
   [[default]]
     [[[window0]]]
