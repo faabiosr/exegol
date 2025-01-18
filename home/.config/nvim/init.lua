@@ -358,10 +358,9 @@ require('lazy').setup {
   },
 
   { -- Autoclose (brackets, parentesis and more)
-    'echasnovski/mini.pairs',
-    version = '*',
+    'windwp/nvim-autopairs',
     config = function()
-      require('mini.pairs').setup()
+      require('nvim-autopairs').setup()
     end,
   },
 
