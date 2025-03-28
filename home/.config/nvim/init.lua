@@ -124,7 +124,6 @@ require('lazy').setup {
 
   { -- pick everything
     'echasnovski/mini.pick',
-    lazy = false,
     version = '*',
     config = function()
       require('mini.pick').setup {}
@@ -263,7 +262,6 @@ require('lazy').setup {
 
   { -- Autoformat
     'stevearc/conform.nvim',
-    lazy = false,
     keys = {
       {
         '<leader>f',
@@ -391,7 +389,6 @@ require('lazy').setup {
   { -- File explorer
     'nvim-tree/nvim-tree.lua',
     version = '*',
-    lazy = false,
     dependencies = {
       'nvim-tree/nvim-web-devicons',
     },
