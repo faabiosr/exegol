@@ -209,6 +209,7 @@ require('lazy').setup {
             },
           },
         },
+        intelephense = {},
         lua_ls = {
           settings = {
             Lua = {
@@ -222,6 +223,7 @@ require('lazy').setup {
           },
         },
         pyright = {},
+        phpactor={},
         ts_ls = {},
       }
 
@@ -242,6 +244,8 @@ require('lazy').setup {
         'stylua',
         -- shell/bash
         'shfmt',
+        -- php
+        'pint',
         -- others
         'jq',
         'prettier',
@@ -289,6 +293,7 @@ require('lazy').setup {
         javascript = { 'prettier' },
         json = { 'jq' },
         lua = { 'stylua' },
+        php = { 'pint' },
         python = { 'black', 'isort' },
         sh = { 'shfmt' },
         typescript = { 'prettier' },
@@ -481,6 +486,7 @@ require('lazy').setup {
         'make',
         'markdown',
         'ninja',
+        'php',
         'python',
         'rst',
         'toml',
