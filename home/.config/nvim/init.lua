@@ -227,11 +227,12 @@ require('lazy').setup {
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'black',
-        'goimports',
-        'gofumpt',
         'delve',
+        'gofumpt',
+        'goimports',
         'gopls',
         'isort',
+        'jq',
         'prettier',
         'ruff',
         'stylua', -- Used to format Lua code
@@ -281,6 +282,7 @@ require('lazy').setup {
         lua = { 'stylua' },
         python = { 'black', 'isort' },
         typescript = { 'prettier' },
+        json = { 'jq' },
       },
     },
   },
