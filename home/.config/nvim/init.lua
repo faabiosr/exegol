@@ -195,6 +195,7 @@ require('lazy').setup {
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
       local servers = {
+        bashls = {},
         eslint = {},
         gopls = {
           settings = {
@@ -215,6 +216,9 @@ require('lazy').setup {
               completion = {
                 callSnippet = 'Replace',
               },
+              diagnostics = {
+                globals = { 'vim' },
+              },
             },
           },
         },
@@ -226,16 +230,22 @@ require('lazy').setup {
 
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
-        'black',
+        -- golang
         'delve',
         'gofumpt',
         'goimports',
         'gopls',
+        -- python
+        'black',
         'isort',
+        'ruff',
+        -- lua
+        'stylua',
+        -- shell/bash
+        'shfmt',
+        -- others
         'jq',
         'prettier',
-        'ruff',
-        'stylua', -- Used to format Lua code
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -279,10 +289,11 @@ require('lazy').setup {
       formatters_by_ft = {
         go = { 'goimports', 'gofumpt' },
         javascript = { 'prettier' },
+        json = { 'jq' },
         lua = { 'stylua' },
         python = { 'black', 'isort' },
+        sh = { 'shfmt' },
         typescript = { 'prettier' },
-        json = { 'jq' },
       },
     },
   },
@@ -463,8 +474,8 @@ require('lazy').setup {
         'c',
         'go',
         'gomod',
-        'gowork',
         'gosum',
+        'gowork',
         'html',
         'javascript',
         'json',
