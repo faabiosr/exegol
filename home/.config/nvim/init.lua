@@ -122,23 +122,17 @@ require('lazy').setup {
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
 
-  { -- Fuzzy finder
-    'junegunn/fzf.vim',
-    dependencies = {
-      {
-        'junegunn/fzf',
-        build = './install --bin --no-update-rc',
-      },
-    },
-    init = function()
-      vim.g.fzf_command_prefix = 'Fzf'
-      vim.g.fzf_layout = {
-        down = '~20%',
-      }
-
-      vim.g.fzf_preview_window = ''
-      vim.keymap.set('n', '<C-p>', '<cmd>FzfFiles<CR>')
+  { -- pick everything
+    'echasnovski/mini.pick',
+    lazy = false,
+    version = '*',
+    config = function()
+      require('mini.pick').setup {}
     end,
+    keys = {
+      { '<leader>ff', '<cmd>Pick files<cr>', desc = 'Open [f]ind [f]files' },
+      { '<leader>fb', '<cmd>Pick buffers<cr>', desc = 'Open [f]ind [f]buffers' },
+    },
   },
 
   { -- LSP Configuration
