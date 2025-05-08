@@ -123,4 +123,5 @@ PROMPT_COMMAND='__git_ps1 "\[\e[0;36m\][\w]\[\e[39m\]" " " " \[\e[0;36m\][%s\[\e
 [ -d "${HOME}/.local/bin" ] && export PATH="${HOME}/.local/bin:$PATH"
 
 # Load mise
-eval "$(/home/fabio/.local/bin/mise activate bash)"
+MISE_BIN=$(which mise)
+eval "$(${MISE_BIN} activate bash)"

@@ -10,18 +10,15 @@ alias grep='grep --color=auto'
 alias find="gfind"
 alias readlink="greadlink"
 
+# Homebrew
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# Bash completion
+[[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
+
 # Safari
 alias safari="open -a /Applications/Safari.app"
 
-if type brew &>/dev/null; then
-  HOMEBREW_PREFIX="$(brew --prefix)"
-  if [[ -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]]; then
-    source "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh"
-  else
-    for COMPLETION in "${HOMEBREW_PREFIX}/etc/bash_completion.d/"*; do
-      [[ -r "$COMPLETION" ]] && source "$COMPLETION"
-    done
-  fi
-fi
-
-export PATH="/usr/local/sbin:$(python3 -c 'import site; print(site.USER_BASE)')/bin:$PATH"
+# GPG
+export GPG_TTY=$(tty)
+gpgconf --launch gpg-agent

@@ -14,7 +14,7 @@ SCRIPT=$(readlink -f "$0")
 BASE_DIR=$(dirname "${SCRIPT}")
 HOME_DIR=${BASE_DIR}/home
 
-files=$(find ${HOME_DIR} -type f -name '*' -not -path '*AppData/*' -printf "%P ")
+files=$(find ${HOME_DIR} -type f -name '*' -not -path '*AppData/*' -not -path '*scoop/*' -not -path '*Documents/*' -printf "%P ")
 
 _link () {
     echo "linking files"
